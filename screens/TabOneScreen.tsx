@@ -5,7 +5,7 @@ import { Text, View } from '../components/Themed';
 import { Image } from 'react-native';
 import { RootTabScreenProps } from '../types';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet} from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Linking} from 'react-native';
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   const [isLoading, setLoading] = useState(true);
@@ -41,7 +41,9 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
-            <Text>{item.title}</Text>
+            <Text
+            onPress={() => Linking.openURL('http://google.com')}
+            >{item.title}</Text>
           )}
         />
       )}
