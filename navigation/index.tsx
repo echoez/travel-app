@@ -104,7 +104,7 @@ function BottomTabNavigator() {
       component={TabThreeScreen}
       options={{
         title: 'Tab Three',
-        tabBarIcon: ({ color }) => <TabBarIcon name="plus-square" color={color} />,
+        tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />,
       }}
       />
 
