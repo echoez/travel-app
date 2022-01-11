@@ -17,6 +17,8 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import TabThreeScreen from '../screens/TabThreeScreen';
+import TabFourScreen from '../screens/TabFourScreen';
+import TabFiveScreen from '../screens/TabFiveScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -68,7 +70,7 @@ function BottomTabNavigator() {
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -90,7 +92,8 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color}/>,
+          tabBarBadge: 3
         }}
       />
 
@@ -101,7 +104,25 @@ function BottomTabNavigator() {
       component={TabThreeScreen}
       options={{
         title: 'Tab Three',
-        tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        tabBarIcon: ({ color }) => <TabBarIcon name="plus-square" color={color} />,
+      }}
+      />
+
+<BottomTab.Screen
+      name="TabFour"
+      component={TabFourScreen}
+      options={{
+        title: 'Tab Four',
+        tabBarIcon: ({ color }) => <TabBarIcon name="lock" color={color} />,
+      }}
+      />
+
+<BottomTab.Screen
+      name="TabFive"
+      component={TabFiveScreen}
+      options={{
+        title: 'Tab Five',
+        tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
       }}
       />
 </BottomTab.Navigator>
