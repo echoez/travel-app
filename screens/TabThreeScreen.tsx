@@ -1,47 +1,57 @@
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { Camera } from 'expo-camera';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function TabThreeScreen() {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [scanned, setScanned] = useState(false);
+
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
 
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    console.log('handleBarCodeScanned()')
+    console.log(type)
+    console.log(data)
+
+    //TODO: MCADET - Logic to switch screens go here
+
+    setTimeout(function(){
+      setScanned(false);
+    }, 1000);
+   // alert(`Bar code wittth type ${type} and data ${data} has been scanned!`);
+  };
+
+
   if (hasPermission === null) {
-    return <View />;
+    return <Text>Requesting for camera permission</Text>;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}>
-            <Text style={styles.text}> Flip </Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={StyleSheet.absoluteFillObject}
+      />
+      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
