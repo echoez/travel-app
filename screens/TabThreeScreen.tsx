@@ -1,7 +1,7 @@
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, TouchableOpacity, Button, Modal } from 'react-native';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
@@ -10,6 +10,7 @@ export default function TabThreeScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.front);
   const [scanned, setScanned] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
 
   useEffect(() => {
@@ -21,16 +22,19 @@ export default function TabThreeScreen() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    console.log('handleBarCodeScanned()')
+    const event = new Date();
+
+    console.log('handleBarCodeScanned() - ' + (event.toLocaleString('en-GB', { timeZone: 'America/New_York' })) )
     console.log(type)
     console.log(data)
-
+    setModalVisible(true);
     //TODO: MCADET - Logic to switch screens go here
 
     setTimeout(function(){
       setScanned(false);
+      setModalVisible(false);
       
-    }, 1000);
+    }, 1500);
    // alert(`Bar code wittth type ${type} and data ${data} has been scanned!`);
   };
 
@@ -49,6 +53,7 @@ export default function TabThreeScreen() {
         style={StyleSheet.absoluteFillObject}
         type={BarCodeScanner.Constants.Type.front}
       />
+      {modalVisible && <Modal><Text>{'This is a test'}</Text></Modal>}
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
     </View>
   );
