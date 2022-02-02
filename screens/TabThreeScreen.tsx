@@ -8,7 +8,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 export default function TabThreeScreen() {
 
   const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type, setType] = useState(Camera.Constants.Type.front);
   const [scanned, setScanned] = useState(false);
 
 
@@ -29,6 +29,7 @@ export default function TabThreeScreen() {
 
     setTimeout(function(){
       setScanned(false);
+      
     }, 1000);
    // alert(`Bar code wittth type ${type} and data ${data} has been scanned!`);
   };
@@ -46,6 +47,7 @@ export default function TabThreeScreen() {
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
+        type={BarCodeScanner.Constants.Type.front}
       />
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
     </View>
